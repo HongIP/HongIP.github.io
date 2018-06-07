@@ -15,7 +15,7 @@
 <h3>HongIP Dapp TEST예제</h3>
 <ul>
   <li>컨트랙트 주소: <span id="contractAddr"></span>
-    <input id="newContract" type="text"><button onclick="newContract()">새 컨트랙트 저장하기</button></li>
+    <input id="newContractcode" type="text"><button onclick="newContract()">새 컨트랙트 저장하기</button></li>
   <li>내 어카운트 주소: <span id="accountAddr"></span></li>
   <li>컨트랙트에 저장된 값: <span id="storedData"></span>
     <button onclick="getValue()">새로고침</button> (현재블록: <span id="lastBlock"></span>)</li>
@@ -71,16 +71,10 @@ function startApp() {
 
 function newContract() {
 
-    var newContractAddress = document.getElementById('newContract').innerHTML;
-    simpleStorageContract = web3.eth.contract(abi);
-  simpleStorage = simpleStorageContract.at(newContractAddress);
-  document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
-  web3.eth.getAccounts(function(e,r){
-    document.getElementById('accountAddr').innerHTML = getLink(r[0]);
-  });
+    var newContractAddress = document.getElementById('newContractcode').innerHTML;
+    contractAddress = newContractAddress;
 
-  getValue();
-
+    startApp();
   
 }
 
