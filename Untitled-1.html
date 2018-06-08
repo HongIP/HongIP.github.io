@@ -71,11 +71,13 @@ function startApp() {
 
 function newContract() {
 
-    var newContractAddress = document.getElementById('newContractcode').value;
-    contractAddress = newContractAddress;
+    contractAddress = document.getElementById('newContractcode').value;
+    
 
-    startApp();
-  
+    simpleStorage = simpleStorageContract.at(contractAddress);
+  document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
+
+  getValue();
 }
 
 function getLink(addr) {
@@ -97,7 +99,7 @@ function setValue() {
   var newValue = document.getElementById('newValue').value;
   var txid
   simpleStorage.set(newValue, function(e,r){
-    document.getElementById('result').innerHTML = 'Transaction id: ' + r + '<span id="pending" style="color:red;">(Pending)</span>';
+    document.getElementById('result').innerHTML = 'Transaction id: ' + r + '<span id="pending" style="color:red;">(기록중)</span>';
     txid = r;
   });
   var filter = web3.eth.filter('latest');
