@@ -69,14 +69,14 @@
     }
 
     function getValue1(){
-        var newValue = document.getElementById('newValue').value;
+        var newValue = document.getElementById('keyvalue').value;
         simpleStorage.getValue1(newValue,function(e,r){
         document.getElementById('testInfo1').innerHTML=r;
         });
     }
 
     function getValue2(){
-        var newValue = document.getElementById('newValue').value;
+        var newValue = document.getElementById('keyvalue').value;
         simpleStorage.getValue2(newValue,function(e,r){
         document.getElementById('testInfo2').innerHTML=r;
         });
