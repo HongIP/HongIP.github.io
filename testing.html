@@ -14,14 +14,19 @@
 <body>
     <h3> TEST</h3>
     <ul>
-      <li>컨트랙트 주소: <span id="contractAddr"></span>
-        <input id="newContractcode" type="text"><button onclick="newContract()">새 컨트랙트 저장하기</button></li>
+      <li>컨트랙트 주소: <span id="contractAddr"></span></li>
       <li>내 어카운트 주소: <span id="accountAddr"></span></li>
-      <li>컨트랙트에 저장된 값: <span id="storedData"></span>
-        <button onclick="getValue()">새로고침</button> (현재블록: <span id="lastBlock"></span>)</li>
-      <li><input id="newValue" type="text"><button onclick="setValue()">새 값으로 저장하기</button>
+
+      <li> 정보 보기<br><br>
+        키값을 입력하세요
+        <input id="keyvalue" type="text" >
+        <button onclick="getValue1()">정보 1</button> <span id="testInfo1"></span><br>
+        <button onclick="getValue2()">정보 2</button> <span id="testInfo2"></span></li>
+        <li>새로운 정보 입력</li>
+      <li><input id="newValue1" type="text" ><input id="newValue2" type="text"><button onclick="setValue()">정보 추가하기</button>
           <div id="result"></div></li>
-      <li>새 값을 저장한 후 팬딩 트랜잭션이 블록에 포함되면 자동으로 페이지가 업데이트될 것입니다.</li>
+
+      
     </ul>
     
    
@@ -30,10 +35,10 @@
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script -->
 <script>
-    var contractAddress = '0x5818ea23d1041e76db3792ab80e999b77b370733';
+    var contractAddress = '0xec9762fa41b46e2d1a897d88a43463a79391f40a';
 
-    
-    var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"}];
+
+    var abi = [{"constant":true,"inputs":[{"name":"_key","type":"uint256"}],"name":"getValue1","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_key","type":"uint256"}],"name":"getValue2","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_value1","type":"string"},{"name":"_value2","type":"string"}],"name":"setValue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"key","type":"uint256"}],"name":"KeyCheck","type":"event"}];
     var simpleStorageContract;
     var simpleStorage;
     
@@ -62,5 +67,21 @@
     
       
     }
+
+    function getValue1(){
+        var newValue = document.getElementById('newValue').value;
+        simpleStorage.getValue1(newValue,function(e,r){
+        document.getElementById('testInfo1').innerHTML=r;
+        });
+    }
+
+    function getValue2(){
+        var newValue = document.getElementById('newValue').value;
+        simpleStorage.getValue2(newValue,function(e,r){
+        document.getElementById('testInfo2').innerHTML=r;
+        });
+    }
+
+
 </script>
 </html>
