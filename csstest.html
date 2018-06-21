@@ -73,7 +73,10 @@ form div.dynamiclabel > *:focus + label{ /* label style when user focuses on chi
 
       <li> 정보 보기<br><br>
         키값을 입력하세요
-        <input id="keyvalue" type="text" >
+        <div class="dynamiclabel">
+        <input id="keyvalue" placeholder="키값" type="text" >
+        <label for="keyvalue">이름적어라</label>
+        </div>
         <button onclick="getValue1()">정보 1</button> <span id="testInfo1"></span><br>
         <button onclick="getValue2()">정보 2</button> <span id="testInfo2"></span></li>
         <li>새로운 정보 입력</li>
@@ -82,17 +85,17 @@ form div.dynamiclabel > *:focus + label{ /* label style when user focuses on chi
           <form>
             <div class="dynamiclabel">
               <input id="name" placeholder="Name" type="text">
-              <label for="name">Name</label>
+              <label for="name">이름적어라</label>
             </div>
           
             <div class="dynamiclabel">
               <input id="email" placeholder="Email Address" type="text">
-              <label for="email">Email Address</label>
+              <label for="email">이메일 적어!</label>
             </div>
           
             <div class="dynamiclabel">
               <textarea id="feedback" placeholder="Feedback"></textarea>
-              <label for="feedback">Feedback</label>
+              <label for="feedback">할말있냐?</label>
             </div>
           </form>
       
