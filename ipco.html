@@ -93,12 +93,12 @@
     
     }
     function setMember(){
-      var memberAddr = document.getElementById('MembercontractAddress').value;
+      var memberAddr = document.getElementById('newMem').value;
       simpleStorage.setMember(memberAddr, function(e,r){});
 
     }
     function setCoin(){
-      var coinAddr = document.getElementById('CoincontractAddress').value;
+      var coinAddr = document.getElementById('newCoin').value;
       simpleStorage.setCoin(coinAddr,function(e,r){});
 
 
