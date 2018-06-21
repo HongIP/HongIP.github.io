@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <link rel="stylesheet" type="text/css" href="https:///HongIP.github.io/usertype.css"> <!--<form><div class="dynamiclabel"></div> -->
+  <title> TEST </title>
+
+
+  <body>
+      <h3> Ipco</h3>
+      <form>
+            <li>내 어카운트 주소: <span id="accountAddr"></span></li>
+          <ul>
+              <li>맴버 세팅: <div class="dynamiclabel"><input id="newMem" type="text">
+            <label for="newMem">계약할 Member</label></div>
+            <button onclick="setMember()">맴버 등록</button></li>
+        </li>
+            <li>코인 세팅 :<div class="dynamiclabel"><input id="newCoin" type="text">
+            <label for="newCoin">계약할 Coin</label></div></li>
+            <button onclick="setCoin()">코인 등록</button>
+          </ul>
+            
+          <li>회원 등급 생성
+            <div class="dynamiclabel">
+              <input id="mem_name" type="text">
+              <label for="mem_name">등급이름</label>
+            </div>
+            <div class="dynamiclabel">
+              <input id="mem_times" type="text">
+              <label for="mem_times">최소거래횟수</label>
+            </div>
+            <div class="dynamiclabel">
+              <input id="mem_sum" type="text">
+              <label for="mem_sum">최소 거래량</label>
+            </div>
+            <div class="dynamiclabel">
+              <input id="mem_rate" type="text">
+              <label for="mem_rate">환율</label>
+            </div>
+            <button onclick="setMemStatus()">회원등급 등록</button>
+          </li>
+          
+            <div class="dynamiclabel">
+              <input id="addr" type="text">
+              <label for="addr">주소 입력</label>
+            </div>
+            <button onclick="History()">거래 이력 조회<span id="history"></span></button>
+          
+      </form>
+
+
+
+  </body>
+
+
+  <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script -->
+<script>
+    
+    var MembercontractAddress = '0x0f71511ec159e336fde08de634f2e1e11e083918'; //맴버 Tx
+    var CoincontractAddress = '0x192e4dedac1151f9da64af217e3539c79c819eaf'; //코인 tx
+
+
+    var abi = [{"constant":true,"inputs":[],"name":"coin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_member","type":"address"}],"name":"getCashbackRate","outputs":[{"name":"rate","type":"int8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"status","outputs":[{"name":"name","type":"string"},{"name":"times","type":"uint256"},{"name":"sum","type":"uint256"},{"name":"rate","type":"int8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_member","type":"address"},{"name":"_value","type":"uint256"}],"name":"updateHistory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"setCoin","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"tradingHistory","outputs":[{"name":"times","type":"uint256"},{"name":"sum","type":"uint256"},{"name":"statusIndex","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_index","type":"uint256"},{"name":"_name","type":"string"},{"name":"_times","type":"uint256"},{"name":"_sum","type":"uint256"},{"name":"_rate","type":"int8"}],"name":"editStatus","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_new","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"string"},{"name":"_times","type":"uint256"},{"name":"_sum","type":"uint256"},{"name":"_rate","type":"int8"}],"name":"pushStatus","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldaddr","type":"address"},{"indexed":false,"name":"newaddr","type":"address"}],"name":"TransferOwnership","type":"event"}];
+    var simpleStorageContract;
+    var simpleStorage;
+    
+    window.addEventListener('load', function() {
+    
+      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+      if (typeof web3 !== 'undefined') {
+        // Use Mist/MetaMask's provider
+        window.web3 = new Web3(web3.currentProvider);
+      } else {
+        console.log('No web3? You should consider trying MetaMask!')
+        // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+        window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+      }
+      // Now you can start your app & access web3 freely:
+      startApp();
+    });
+    
+    function startApp() {
+      simpleStorageContract = web3.eth.contract(abi);
+      simpleStorage = simpleStorageContract.at(MembercontractAddress);
+      //document.getElementById('contractAddr').innerHTML = MembercontractAddress;
+      
+      web3.eth.getAccounts(function(e,r){
+        document.getElementById('accountAddr').innerHTML = r[0];
+      });
+    
+    }
+    function setMember(){
+      var memberAddr = document.getElementById('MembercontractAddress').value;
+      simpleStorage.setMember(memberAddr, function(e,r){});
+
+    }
+    function setCoin(){
+      var coinAddr = document.getElementById('CoincontractAddress').value;
+      simpleStorage.setCoin(coinAddr,function(e,r){});
+
+
+    }
+
+    function setMemStatus(){
+      var _name = document.getElementById('mem_name').value;
+      var _time = document.getElementById('mem_times').value;
+      var _sum = document.getElementById('mem_sum').value;
+      var _rate = document.getElementById('mem_rate').value;
+
+      simpleStorage.pushStatus(_name,_time,_sum,_rate,function(e,r){});
+      
+    }
+    function History()
+    {
+      var adr= document.getElementById('addr').value;
+
+      simpleStorage.tradingHistory(adr,function(e,r){});
+
+
+    }
+
+
+</script>
+</html>
