@@ -54,96 +54,58 @@ form div.dynamiclabel > *:focus + label{ /* label style when user focuses on chi
   transform: rotate(-3deg);
 }
 button.css3dbutton {
-    background: #c1e75c; /* default green background color of button */
-    color: black;
+    background: darkred; /* background color of button */
+    color: white;
     text-decoration: none;
-    font: bold 18px Arial; /* font size and style */
+    font: bold 28px Arial; /* font size and style */
     position: relative;
-    display: inline-block;
-    margin-right: 15px; /* spacing between multiple buttons */
-    padding: 15px; /* padding inside button */
-    border-radius: 85px; /* border radius of button */
-    width: 85px; /* dimensions of button */
-    height: 85px;
-    outline: none;
-    box-shadow: 0 8px 0 #8dab3b, /* depth and color of main shadow */
-        0 0 3px rgba(0,0,0, 0.2),
-        0 20px 20px #eee;
-    -moz-transition: all 0.2s ease-in-out; /* transition style and duration */
+		top: 0; /* anchor main button's position */
+    bottom: -12px; /* Depth of 3D effect. :after pseudo element inherits this value so it's animated in Chrome. See: kizu.ru/en/pseudos */
+		margin-bottom: 12px;
+    -moz-box-shadow: 0 -15px 5px darkred inset;
+    -webkit-box-shadow: 0 -15px 5px darkred inset;
+    box-shadow: 0 -15px 5px darkred inset;
+    -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
 }
 
-button.css3dbutton span.outer{ /* outermost text container */
-    text-align: center;
+button.css3dbutton, a.css3dbutton:after {
+    display: inline-block;
+    padding: 10px 15px; /* vertical and horizontal padding of button */
+    -moz-border-radius: 8px/15px;
+    -webkit-border-radius: 8px/15px;
+    border-radius: 8px/15px;
+    outline: none;
+}
+
+button.css3dbutton:after { /* pseudo element to construct 3D side of button */
+    content: "";
+    position: absolute;
+    padding: 0;
+    z-index: -1;
+    bottom: inherit; /* Inherit main button bottom value to animate it. See: kizu.ru/en/pseudos */
+    left: 0;
     width: 100%;
-    display: block;
-    position: relative;
-    top: 50%; /* center element */
-    -webkit-transform: translateY(-50%); /* center element */
-    -ms-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    transform: translateY(-50%); 
+    height: 100%;
+    background: #6e0e0c; /* background color of 3D effect */
+    -moz-box-shadow: 1px 0 3px gray;
+    -webkit-box-shadow: 1px 0 3px gray;
+    box-shadow: 1px 0 3px gray;
 }
-
-button.css3dbutton span.outer span.top{ /* top line */
-    display: block;
-    padding-bottom: 4px;
-}
-
-button.css3dbutton span.outer span.bottom{ /* bottom line */
-    border-top: 1px solid black;
-    padding-top: 4px;
-    display: block;
-    text-transform: uppercase;
-    line-height: 12px;
-    font-size: 60%;
-}
-
 
 button.css3dbutton:hover {
-    background: #9cc62b; /* background color when mouse rolls over button */
-    box-shadow:  none;
-    -ms-transform: translateY(8px); /* shift button downwards by shadow depth amount */
-    -webkit-transform: translate3D(0, 8px, 0);
-    -moz-transform: translateY(8px);
-    transform: translate3D(0, 8px, 0);
+    -moz-box-shadow: 0 25px 5px rgba(182, 64, 61, 0.7) inset;
+    -webkit-box-shadow: 0 25px 5px rgba(182, 64, 61, 0.7) inset;
+    box-shadow: 0 25px 5px rgba(182, 64, 61, 0.7) inset;
+    background: #bc3835; /* background color when mouse rolls over button */
 }
 
-
-button.css3dbutton.blue{
-    background: #a6e9f7;
-    box-shadow: 0 8px 0 #529dad, /* depth and color of main shadow */
-        0 0 3px rgba(0,0,0, 0.2),
-        0 20px 20px #eee;
-}
-
-button.css3dbutton.blue:hover {
-    background: #66cbe1; /* background color when mouse rolls over button */
-    box-shadow: none;
-}
-
-button.css3dbutton.pink{
-    background: #fbbaba;
-    box-shadow: 0 8px 0 #d74848, /* depth and color of main shadow */
-        0 0 3px rgba(0,0,0, 0.2),
-        0 20px 20px #eee;
-}
-
-button.css3dbutton.pink:hover {
-    background: #ea6161; /* background color when mouse rolls over button */
-    box-shadow: none;
-}
-
-buttona.css3dbutton.yellow{
-    background: #f3fa86;
-    box-shadow: 0 8px 0 #dbcd2f, /* depth and color of main shadow */
-        0 0 3px rgba(0,0,0, 0.2),
-        0 20px 20px #eee;
-}
-
-button.css3dbutton.yellow:hover {
-    background: #ecd347; /* background color when mouse rolls over button */
-    box-shadow: none;
+button.css3dbutton:active {
+    top: 12px; /* shift button down 12px when depressed. Change 12px to match button's "bottom" property above */
+    bottom: 0;
+    -moz-box-shadow: 0 -20px 5px darkred inset, 1px 1px 2px #eee;
+    -webkit-box-shadow: 0 -20px 5px darkred inset, 1px 1px 2px #eee;
+    box-shadow: 0 -20px 5px darkred inset, 1px 1px 2px #eee;
 }
