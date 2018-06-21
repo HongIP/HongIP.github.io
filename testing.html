@@ -81,6 +81,13 @@
         document.getElementById('testInfo2').innerHTML=r;
         });
     }
+    function setValue(){
+      var newval1= document.getElementById('newValue1').value;
+      var newval2 = document.getElementById('newValue2').value;
+
+      simpleStorage.setValue(newval1,newval2,function(e,r){});
+
+    }
 
 
 </script>
