@@ -108,7 +108,8 @@
     function transfer(){
         var addr = document.getElementById('transferaddr').value;
         var money = document.getElementById('money').value;
-        cocoCoin.transfer(addr,money,function(e,r){});
+        console.log(addr,money);
+        cocoCoin.transfer(addr,money,function(e,r){console.log(r)});
     }
 
     function startsale()
