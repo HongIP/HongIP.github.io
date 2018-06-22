@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <link rel="stylesheet" type="text/css" href="https:///HongIP.github.io/usertype.css"> <!--<form><div class="dynamiclabel"></div> -->
+  <title> TEST </title>
+
+
+  <body>
+      <h3> Crowdsale</h3>
+      <form>
+            <li>내 어카운트 주소: <span id="accountAddr"></span></li>
+            <li>코인 컨트랙트 : <span id="coincontract"></span></li>
+            <li>클라우드 컨트랙트 : <span id="crowdcon"></span></li>
+          <ul>
+              <li>송 금: <div class="dynamiclabel"><input id="transferaddr" type="text">
+            <label for="newMem">송금 주소</label></div>
+            <div class="dynamiclabel"><input id="money" type="text">
+            <label for="money">보낼 금액</label></div>
+            <button onclick="transfer()">클라우드에 전송</button></li>
+        </li>
+            <li>판매 시작 :<div class="dynamiclabel"><input id="newsale" type="text">
+            <label for="newsale">판매 기간</label></div></li>
+            <button onclick="startsale()">판매 시작</button>
+          </ul>
+            
+          <li>빈칸
+            <div class="dynamiclabel">
+              <input id="mem_name" type="text">
+              <label for="mem_name">ㄴ름</label>
+            </div>
+            <div class="dynamiclabel">
+              <input id="mem_times" type="text">
+              <label for="mem_times">ㄴ수</label>
+            </div>
+            <div class="dynamiclabel">
+              <input id="mem_sum" type="text">
+              <label for="mem_sum">ㄴ</label>
+            </div>
+            <div class="dynamiclabel">
+              <input id="mem_rate" type="text">
+              <label for="mem_rate">ㄴ</label>
+            </div>
+            <button onclick="setMemStatus()">버튼</button>
+          </li>
+          
+            <div class="dynamiclabel">
+              <input id="addr" type="text">
+              <label for="addr">ㄴ력</label>
+            </div>
+            <button onclick="History()">버튼<span id="history"></span></button>
+          
+      </form>
+
+
+
+  </body>
+
+
+  <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script -->
+<script>
+    
+    var contractAddress = '0x144613b9bb78c6c4550b3d5b7844abdfce1e4b6c'; //크라우드 세일 tx Tx
+    //var MembercontractAddress = '0x0f71511ec159e336fde08de634f2e1e11e083918'; //맴버 Tx
+    var CoincontractAddress = '0x27ab1088eb8ad94187a480ac7d3192957ebfca68'; //코인 tx
+
+
+    var abi = [{"constant":true,"inputs":[],"name":"sellingPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"deadline","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"close","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"isOpened","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_durationInminutes","type":"uint256"}],"name":"start","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"salesVolum","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getRemainingTime","outputs":[{"name":"min","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_new","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"token","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_token","type":"address"},{"name":"_salesVolum","type":"uint256"},{"name":"_priceInEther","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":false,"name":"salesVolum","type":"uint256"},{"indexed":false,"name":"sellingPrice","type":"uint256"},{"indexed":false,"name":"deadline","type":"uint256"},{"indexed":false,"name":"beneficiary","type":"address"}],"name":"EscrowStart","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"addr","type":"address"},{"indexed":false,"name":"amount","type":"uint256"}],"name":"ConfirmedPayment","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldaddr","type":"address"},{"indexed":false,"name":"newaddr","type":"address"}],"name":"TransferOwnership","type":"event"}];
+    var simpleStorageContract;
+    var crowdsaleStorage;
+    var cocoCoin;
+    var membergrade;
+    
+    window.addEventListener('load', function() {
+    
+      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+      if (typeof web3 !== 'undefined') {
+        // Use Mist/MetaMask's provider
+        window.web3 = new Web3(web3.currentProvider);
+      } else {
+        console.log('No web3? You should consider trying MetaMask!')
+        // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+        window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+      }
+      // Now you can start your app & access web3 freely:
+      startApp();
+    });
+    
+    function startApp() {
+      simpleStorageContract = web3.eth.contract(abi);
+      crowdsaleStorage = simpleStorageContract.at(contractAddress);
+      cocoCoin = simpleStorageContract.at(CoincontractAddress);
+      //membergrade = simpleStorageContract.at(membergrade);
+
+      //document.getElementById('contractAddr').innerHTML = MembercontractAddress;
+      
+      web3.eth.getAccounts(function(e,r){
+        document.getElementById('accountAddr').innerHTML = r[0];
+      });
+      document.getElementById('coincontract').innerHTML = CoincontractAddress;
+      document.getElementById('crowdcon').innerHTML = crowdsaleStorage;
+    
+    }
+
+    function transfer(){
+        var addr = document.getElementById('transferaddr').value;
+        var money = document.getElementById('money').value;
+        cocoCoin.transfer(addr,money,function(e,r){});
+    }
+
+    function startsale()
+    {
+        var time = document.getElementById('newsale').value;
+
+        crowdsaleStorage.start(time,function(e,r){});
+
+    }
+    
+
+</script>
+</html>
