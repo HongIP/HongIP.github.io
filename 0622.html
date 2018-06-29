@@ -64,23 +64,30 @@
                 <form action="/">
                  <fieldset>    
                         <input type="file" name="photo" id="photo">
-                        <button type="button" onclick="upload()">Upload</button>
+                        <button type="button" onclick="upload()" type="button">Upload</button>
                     </fieldset>
                 </form> 
                 <a id="url2"></a>
+              
               <input id="docu_Image" type="text">
               <label for="docu_Image">계약사진</label>
             </div>
+          </form>
+
+        <form>
             <div class="dynamiclabel">
               <input id="docu_name" type="text">
               <label for="docu_name">계약 이름</label>
             </div>
+          </form>
+        <form>
             <div class="dynamiclabel">
               <input id="docu_info" type="text">
               <label for="docu_info">계약 정보</label>
-              <button onclick="SetMyDocument()">서류 등록하기</button>
+              <button onclick="SetMyDocument()" type="button">서류 등록하기</button>
             </div>
           
+          
             
           
 
@@ -90,7 +97,7 @@
 
 
 
-            <button onclick="Updatepage()">매물정보 수정페이지로 가기</button>
+            <button onclick="Updatepage()" type="button">매물정보 수정페이지로 가기</button>
             <li>판매 물품 정보 수정
               <div class="dynamiclabel">
                 <input id="pro_updateImage" type="text">
@@ -149,7 +156,7 @@
               <span id="returnowner"></span><br>
               <span id="returnnumber"></span>
             </li>
-            </form>
+           
 
             <li>판매자 정보
                 <div class="dynamiclabel">
@@ -208,8 +215,12 @@
         </span>
       </button>
 
+      
 
 
+
+    </form>
+    <form><button onclick="dsds()">sdsds</button></form>
   </body>
   <html>
 

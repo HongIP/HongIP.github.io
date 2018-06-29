@@ -1,24 +1,24 @@
 
-form div.dynamiclabel{ /* div container for each form field with pop up label */
+div.dynamiclabel{ /* div container for each form field with pop up label */
   display: block;
   margin: 30px;
 	font: 16px;
   position: relative;
 }
 
-form div.dynamiclabel input[type="text"], form div.dynamiclabel textarea{
+div.dynamiclabel input[type="text"], div.dynamiclabel textarea{
   width: 320px;
   padding: 10px;
   border: 1px solid #c3c3c3;
   border-radius: 7px;
 }
 
-form div.dynamiclabel textarea{
+div.dynamiclabel textarea{
 	height: 200px;
 }
 
 
-form div.dynamiclabel label{ /* pop up label style */
+div.dynamiclabel label{ /* pop up label style */
   position: absolute;
   left: 0;
   background: lightyellow;
@@ -38,13 +38,13 @@ form div.dynamiclabel label{ /* pop up label style */
 }
 
 
-form div.dynamiclabel > *:focus{ /* when user focuses on child element inside div.dynamiclabel */
+div.dynamiclabel > *:focus{ /* when user focuses on child element inside div.dynamiclabel */
   border: 1px solid #45bcd2;
   box-shadow: 0 0 8px 2px #98d865;
 }
 
 
-form div.dynamiclabel > *:focus + label{ /* label style when user focuses on child element inside div.dynamiclabel */
+div.dynamiclabel > *:focus + label{ /* label style when user focuses on child element inside div.dynamiclabel */
   opacity: 1;
   z-index:100;
 	top: -35px; /* Post top position of label on focus relative to dynamiclabel container */
