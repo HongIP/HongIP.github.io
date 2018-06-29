@@ -12,17 +12,21 @@
       <h3> SELLER</h3>
       <form>
            
-          <ul>
+          
               <li>가입: <div class="dynamiclabel"><input id="addmember" type="text">
             <label for="addmember">이름</label></div>
             <div class="dynamiclabel"><input id="newid" type="text">
-            <label for="newid">보낼 금액</label></div></li>
-            <li><button onclick="setSeller()">판매자로 가입</button><button onclick="setBuyer()">구매자로 가입</button></li>
-        
+            <label for="newid">아이디</label></div>
+
+
+            <div class="dynamiclabel"><input id="newphonenum" type="text">
+              <label for="newphonenum">전화번호</label></div></li>
+            <li><button onclick="setSeller()" type="button">판매자로 가입</button><button onclick="setBuyer()" type="button">구매자로 가입</button></li>
+            
             
             ========================================판매자==========================================
 
-            <li>판매 물품 등록<button onclick="uploadpage()">등록페이지로</button></li>
+            <li>판매 물품 등록<button onclick="uploadpage()" type="button">등록페이지로</button></li>
             <li>판매 물품 정보 입력
               <div class="dynamiclabel">
                 <input id="pro_Image" type="text">
@@ -47,23 +51,42 @@
               <div class="dynamiclabel">
                 <input id="pro_name" type="text">
                 <label for="pro_name">매물 이름</label>
+              </div>
               
-              <button onclick="setUploadProduct()">버튼</button>
+              <button onclick="setUploadProduct()" type="button">버튼</button>
             </li>
+            
 
-            <li>개인(서류)</li>
-            <li><div class="dynamiclabel">
+            
+            <li>개인정보 서류등록</li>
+            
+            <div class="dynamiclabel">    
+                <form action="/">
+                 <fieldset>    
+                        <input type="file" name="photo" id="photo">
+                        <button type="button" onclick="upload()">Upload</button>
+                    </fieldset>
+                </form> 
+                <a id="url2"></a>
               <input id="docu_Image" type="text">
-              <label for="docu_Image">서류사진</label>
+              <label for="docu_Image">계약사진</label>
             </div>
             <div class="dynamiclabel">
               <input id="docu_name" type="text">
-              <label for="docu_name">서류 이름</label>
+              <label for="docu_name">계약 이름</label>
             </div>
             <div class="dynamiclabel">
               <input id="docu_info" type="text">
-              <label for="docu_info">서류 정보</label>
-            </div></li>
+              <label for="docu_info">계약 정보</label>
+              <button onclick="SetMyDocument()">서류 등록하기</button>
+            </div>
+          
+            
+          
+
+            
+
+            
 
 
 
@@ -92,30 +115,98 @@
               <div class="dynamiclabel">
                 <input id="pro_updatename" type="text">
                 <label for="pro_updatename">매물 이름</label>
-              
+              </div>
               <button onclick="setUpdateProduct()">수정 완료버튼</button>
             </li>
 
             <button onclick="closetrans()">거래 종료</button>
             <button onclick="Allstoptransclose()">거래 취소</button>
 
+            <li>
+            <div class="dynamiclabel">
+                <input id="trans_member" type="text">
+                <label for="trans_member">맴버 컨트랙트</label>
+              </div>
+              <div class="dynamiclabel">
+                <input id="trans_proidx" type="text">
+                <label for="trans_proidx">매물인덱스</label>
+              </div>
+              <button onclick="setTrans()">트랜스 시작버튼</button>
+            </li>
+        
+
+            <li>정보 출력
+                <div class="dynamiclabel">
+                    <input id="pro_index" type="text">
+                    <label for="pro_index">매물 인덱스</label>
+                  </div>
+                  <button onclick="getProduct()">정보 출력버튼</button>
+              <span id="returninfo"></span><br>
+              <span id="returnprice"></span><br>
+              <span id="returntag"></span><br>
+              <span id="returnname"></span><br>
+              <span id="returnimage"></span><br>
+              <span id="returnowner"></span><br>
+              <span id="returnnumber"></span>
+            </li>
+            </form>
+
+            <li>판매자 정보
+                <div class="dynamiclabel">
+                    <input id="seller_addr" type="text">
+                    <label for="seller_addr">판매자 주소</label>
+                  </div>
+                  <button onclick="getsellerinfo()">정보 출력버튼</button>
+                <span id="membertype"></span><br>
+                <span id="phonenumber"></span><br>
+                <span id="reliability"></span><br>
+                <span id="Status_Numberofpeople"></span><br>
+                <span id="Status_sum"></span><br>
+                <span id="Status_avg"></span><br>
+                <span id="id"></span><br>
+                <span id="name"></span>
+
+            </li>
+            <li>물품 정보
+                <span id="membertype"></span><br>
+                <span id="phonenumber"></span><br>
+                <span id="reliability"></span><br>
+                <span id="Status_Numberofpeople"></span><br>
+                <span id="Status_sum"></span><br>
+                <span id="Status_avg"></span><br>
+                <span id="id"></span><br>
+                <span id="name"></span>
+              </li>
+
+              <li>
+                거래 완료 품목
+                <div class="dynamiclabel">
+                    <input id="tran_addr" type="text">
+                    <label for="tran_addr">트랜젝션 주소</label>
+                  </div>
+                  <button onclick="getsRoomContract()">정보 출력버튼</button>
+                <span id="membertype"></span><br>
+                <span id="phonenumber"></span><br>
+                <span id="reliability"></span><br>
+                <span id="Status_Numberofpeople"></span>
+
+              </li>
 
 
-
-
-
-            <li>판매 시작 :<div class="dynamiclabel"><input id="newsale" type="text">
+            <li>판매 시작 :
+              <div class="dynamiclabel"><input id="newsale" type="text">
               <label for="newsale">판매 기간</label></div></li>
               <button onclick="startsale()">판매 시작</button>
-            </ul>
+            
           
-            <a href="http://192.168.0.68:8080/김창은.html" class="css3dbutton">
-              <span class="outer">
-              <span class="top">Sign Up!</span>
-              <span class="bottom">It's free and fast</span>
-              </span>
-              </a>
-      </form>
+           
+      
+      <button href="http://192.168.0.68:8080/김창은.html" class="css3dbutton">
+        <span class="outer">
+        <span class="top">Sign Up!</span>
+        <span class="bottom">It's free and fast</span>
+        </span>
+      </button>
 
 
 
